@@ -1,0 +1,51 @@
+https://leetcode.com/problems/longest-palindromic-substring/
+
+class Solution(object):
+    def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        size = len(s)
+        if size == 0 or size == 1: 
+            return s
+        
+        array = [[0 for i in range(size)] for j in range(size)]
+
+        maxLen = 1
+        # maxStr = s[0]
+        start = 0
+        end = 1
+        
+        for i in range(size):
+            array[i][i] = 1
+            if i == size - 1: 
+                break
+            isPal = s[i] == s[i+1]
+            array[i][i+1] = isPal
+            if isPal: 
+                maxLen = 2
+                start = i
+                end = i+2
+                # maxStr = s[i:i+2]
+                
+        
+        for j in range(2, size):
+            for i in range(size-1):
+                prj = j - 1
+                if i >= j or i + 1 > prj: 
+                    break
+                isPalindrome = array[i+1][prj] and s[i] == s[j]
+                # print("word is: ", s[i:j+1])
+                # print("is palindrome: ", isPalindrome, " and si is: ", s[i])
+                # print("array entry: ", array[i+1][j-1], " and i+1, j-1 are ", i+1, j-1, " , string: ", s[i+1:j])
+                array[i][j] = isPalindrome
+                if j - i >= maxLen and isPalindrome: 
+                    maxLen = j - i
+                    start = i
+                    end = j+1
+                    #maxStr = s[i:j+1]
+        
+        maxStr = s[start: end]
+        return maxStr
+        
