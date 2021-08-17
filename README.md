@@ -10,5 +10,5 @@ ________________________
 1. Two sum (E)
 2. Add Two Numbers (M)
 3. Longest Substring Without Repeating Characters (M)
-4. Longest Palindromic Substring (M)\
+4. Longest Palindromic Substring (M)
 5. Palindrome Number (E)
