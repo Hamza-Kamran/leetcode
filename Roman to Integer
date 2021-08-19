@@ -1,0 +1,27 @@
+https://leetcode.com/problems/roman-to-integer/
+
+class Solution(object):
+    def romanToInt(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        
+        num_list = ['I', 'V', 'X', 'L', 'C', 'D', 'M']
+        Values = {'I': 1, 'V': 5, 'X': 10, 'L':50, 'C':100, 'D':500, 'M':1000}
+        
+        adds = {}
+        for num_idx in range(len(num_list)):
+            numeral = num_list[num_idx]
+            adds[numeral] = num_list[num_idx+1:]
+        sums = 0 
+        for idx in range(len(s)):
+            if idx <= len(s) - 2:
+                if s[idx+1] in adds[s[idx]]:
+                    sums -= Values[s[idx]]
+                else: 
+                    sums += Values[s[idx]]
+            else:
+                sums += Values[s[idx]]
+                
+        return sums
