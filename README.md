@@ -2,7 +2,7 @@ My leetcode answers. They are not optimized yet, but rather are my first attempt
 ________________________
 | NAME  |  key | Number|
 |-------|------|-------|
-|   Easy|   E  |   2   | 
+|   Easy|   E  |   3   | 
 | Medium|   M  |   3   |
 |   Hard|   H  |   0   |
 ________________________
@@ -12,3 +12,4 @@ ________________________
 3. Longest Substring Without Repeating Characters (M)
 4. Longest Palindromic Substring (M)
 5. Palindrome Number (E)
+6. Roman to Integer (E)
