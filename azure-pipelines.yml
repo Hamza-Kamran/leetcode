@@ -2,7 +2,7 @@ trigger:
 - main
 
 pool:
-  vmImage: 'TestingPool'
+  name: 'TestingPool'
 
 
 variables:
