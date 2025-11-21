@@ -18,6 +18,12 @@ stages:
       displayName: "Build Step"
       inputs:
         script: echo "Starting build..."
+    - task: PublishBuildArtifacts@1
+      displayName: "Artifact Step"
+      inputs: 
+        PathtoPublish: '$(Build.SourcesDirectory)'
+        ArtifactName: 'demo'
+
     - task: CmdLine@2
       displayName: "Test Step"
       inputs:
