@@ -1,44 +1,31 @@
 trigger:
-  branches:
-    include:
-    - main
+- main
 
-variables:
-- name: appVersion
-  value: "1.0.0"
+pool:
+  name: 'TestingPool'
 
-stages:
-- stage: __default
-  jobs:
-  - job: Job
-    pool:
-      name: 'TestingPool'  # self-hosted agent pool
-    steps:
-    - task: CmdLine@2
-      displayName: "Build Step"
-      inputs:
-        script: echo "Starting build..."
-        
-    - script: |
-        echo "Build.SourcesDirectory: $(Build.SourcesDirectory)"
-        echo "Artifact staging dir: $(Build.ArtifactStagingDirectory)"
-        dir "$(Build.SourcesDirectory)"
-        dir "$(Build.ArtifactStagingDirectory)"
-      displayName: "Debug: list source & staging directories"
-    - task: PublishPipelineArtifact@1
-      displayName: "Artifact Step"
-      inputs: 
-        targetPath: :'$(Build.SourcesDirectory)'
-        artifact: 'demo'
-        publishLocation: 'pipeline'
+steps:
+- checkout: self
+  clean: true
 
-    - task: CmdLine@2
-      displayName: "Test Step"
-      inputs:
-        script: |
-          echo "Running tests for App version: $(appVersion)"
-          echo "All tests passed!"
-    - task: CmdLine@2
-      displayName: "Final Step"
-      inputs:
-        script: echo "Build and test completed successfully!"
+- script: echo "Starting build..."
+  displayName: "Build Step"
+
+- script: |
+    echo "Running tests for App version: $(appVersion)"
+    echo "All tests passed!"
+  displayName: "Test Step"
+
+- script: |
+    echo "DEBUG: Build.SourcesDirectory=$(Build.SourcesDirectory)"
+    echo "DEBUG: Build.ArtifactStagingDirectory=$(Build.ArtifactStagingDirectory)"
+    dir "$(Build.SourcesDirectory)"
+    dir "$(Build.ArtifactStagingDirectory)"
+  displayName: "Debug: list source & staging dirs"
+
+- task: PublishPipelineArtifact@1
+  displayName: "Publish pipeline artifact (recommended)"
+  inputs:
+    targetPath: '$(Build.SourcesDirectory)'
+    artifact: 'demo'
+    publishLocation: 'pipeline'
