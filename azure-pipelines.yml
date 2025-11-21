@@ -18,6 +18,7 @@ stages:
       displayName: "Build Step"
       inputs:
         script: echo "Starting build..."
+        
     - script: |
         echo "Build.SourcesDirectory: $(Build.SourcesDirectory)"
         echo "Artifact staging dir: $(Build.ArtifactStagingDirectory)"
