@@ -18,11 +18,18 @@ stages:
       displayName: "Build Step"
       inputs:
         script: echo "Starting build..."
-    - task: PublishBuildArtifacts@1
+    - script: |
+        echo "Build.SourcesDirectory: $(Build.SourcesDirectory)"
+        echo "Artifact staging dir: $(Build.ArtifactStagingDirectory)"
+        dir "$(Build.SourcesDirectory)"
+        dir "$(Build.ArtifactStagingDirectory)"
+      displayName: "Debug: list source & staging directories"
+    - task: PublishPipelineArtifact@1
       displayName: "Artifact Step"
       inputs: 
-        PathtoPublish: '$(Build.SourcesDirectory)'
-        ArtifactName: 'demo'
+        targetPath: :'$(Build.SourcesDirectory)'
+        artifact: 'demo'
+        publishLocation: 'pipeline'
 
     - task: CmdLine@2
       displayName: "Test Step"
