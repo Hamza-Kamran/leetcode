@@ -1,21 +1,30 @@
 trigger:
-- main
-
-pool:
-  name: 'TestingPool'
-
+  branches:
+    include:
+    - main
 
 variables:
-  appVersion: "1.0.0"
+- name: appVersion
+  value: "1.0.0"
 
-steps:
-- script: echo "Starting build..."
-  displayName: "Build Step"
-
-- script: |
-    echo "Running tests for App version: $(appVersion)"
-    echo "All tests passed!"
-  displayName: "Test Step"
-
-- script: echo "Build and test completed successfully!"
-  displayName: "Final Step"
+stages:
+- stage: __default
+  jobs:
+  - job: Job
+    pool:
+      name: 'TestingPool'  # self-hosted agent pool
+    steps:
+    - task: CmdLine@2
+      displayName: "Build Step"
+      inputs:
+        script: echo "Starting build..."
+    - task: CmdLine@2
+      displayName: "Test Step"
+      inputs:
+        script: |
+          echo "Running tests for App version: $(appVersion)"
+          echo "All tests passed!"
+    - task: CmdLine@2
+      displayName: "Final Step"
+      inputs:
+        script: echo "Build and test completed successfully!"
